@@ -268,3 +268,5 @@ export function atlas(raw) {
     lipschitz: txt(segments.map((x) => abs(x.a)).reduce(max)),
   };
 }
+
+export { Q, add, sub, mul, div, cmp, eq, min, max, mid, txt, rational, parse };
