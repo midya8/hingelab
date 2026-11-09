@@ -47,3 +47,17 @@ One scalar input, one or two hidden ReLU layers of width 1..3, one scalar output
 This bounded educational implementation uses established piecewise-affine network analysis. In particular, [Sotoudeh and Thakur, *Computing Linear Restrictions of Neural Networks* (NeurIPS 2019)](https://proceedings.neurips.cc/paper_files/paper/2019/file/908075ea2c025c335f4865f7db427062-Paper.pdf) develops exact line restrictions for much broader layer families. [Bunel et al., *Branch and Bound for Piecewise Linear Neural Network Verification* (JMLR 2020)](https://www.jmlr.org/papers/v21/19-468.html) studies general verification. HingeLab neither implements nor benchmarks those full systems. [Source notes](SOURCES.md) distinguish used facts from background.
 
 MIT licensed.
+
+## Every reference, one radius
+
+[Reference atlas](https://midya8.github.io/hingelab/reference.html) computes the
+entire exact robust-reference set at a fixed closed-ball radius. Original and
+eroded class components retain open/closed endpoints and isolated ties. Domain
+edges are clipped, not invented adversaries. A class interval can shrink to a
+single robust point with zero length; this remains visible and inspectable.
+
+A separate activation-mask/critical-atom checker verifies the complete set without
+calling the erosion generator. `python -m hingelab reference request.json` creates
+evidence; `python -m hingelab reference-verify report.json` checks it. See
+[REFERENCE.md](REFERENCE.md) for definitions, finite-exhaustion argument, limits
+and attribution. The exact robust length fraction is not accuracy or probability.
