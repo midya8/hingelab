@@ -3,26 +3,44 @@ from .atlas import atlas
 from .oracle import verify
 from .reference import reference_atlas
 from .reference_oracle import reference_verify
+from .radius import radius_profile
+from .radius_oracle import radius_verify
 
 
 def main():
     p = argparse.ArgumentParser(description="Exact bounded one-dimensional ReLU atlas")
     p.add_argument(
-        "command", choices=["atlas", "verify", "reference", "reference-verify"]
+        "command",
+        choices=[
+            "atlas",
+            "verify",
+            "reference",
+            "reference-verify",
+            "radius",
+            "radius-verify",
+        ],
     )
     p.add_argument("file", nargs="?", default="-")
     a = p.parse_args()
     try:
         raw = json.load(sys.stdin if a.file == "-" else open(a.file, encoding="utf8"))
-        if a.command in ("atlas", "reference"):
+        if a.command in ("atlas", "reference", "radius"):
             json.dump(
-                (atlas if a.command == "atlas" else reference_atlas)(raw),
+                {
+                    "atlas": atlas,
+                    "reference": reference_atlas,
+                    "radius": radius_profile,
+                }[a.command](raw),
                 sys.stdout,
                 indent=2,
             )
             print()
         else:
-            valid = (verify if a.command == "verify" else reference_verify)(raw)
+            valid = {
+                "verify": verify,
+                "reference-verify": reference_verify,
+                "radius-verify": radius_verify,
+            }[a.command](raw)
             print(json.dumps({"valid": valid}))
             return 0 if valid else 1
     except (ValueError, TypeError) as e:
