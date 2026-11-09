@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Exact all-reference closed-ball robustness for bounded rational one-dimensional ReLU networks."
+    />
+    <title>HingeLab - every reference, one radius</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="reference.css" />
+  </head>
+  <body>
+    <main>
+      <nav>
+        <a href="index.html">Single-reference inspector</a
+        ><a href="https://github.com/midya8/hingelab"
+          >Source &amp; reproduction</a
+        ><a href="#limits">Scope &amp; attribution</a>
+      </nav>
+      <header>
+        <p class="eyebrow">HingeLab / the reference atlas</p>
+        <h1>Every reference.<br />One exact radius.</h1>
+        <p class="lead">
+          Find the whole set of inputs whose closed perturbation ball stays in
+          the same class. Open endpoints, isolated ties and the domain's edges
+          all count.
+        </p>
+        <div class="tags">
+          <span>Exact component erosion</span
+          ><span>Independent critical-atom checker</span
+          ><span>Closed ball, relative domain</span>
+        </div>
+      </header>
+      <section class="workspace">
+        <div>
+          <label for="control">Choose an experiment</label
+          ><select id="control"></select
+          ><label for="radius">Perturbation radius (integer or fraction)</label
+          ><input id="radius" value="1/2" spellcheck="false" /><label
+            for="input"
+            >Network request JSON</label
+          ><textarea id="input" rows="20" spellcheck="false"></textarea>
+          <div class="actions">
+            <button id="run">Build reference atlas</button
+            ><button id="download" disabled>Download evidence</button>
+          </div>
+          <p id="error" role="alert"></p>
+        </div>
+        <aside>
+          <h2>Not all boundaries shrink the same way.</h2>
+          <p>
+            An interior class component loses a radius from each end. Its
+            endpoint flags survive: a closed interval can shrink to one robust
+            point; an open interval cannot.
+          </p>
+          <p>
+            An included domain edge does not shrink. The perturbation ball is
+            intersected with the declared domain, so there is nothing to
+            classify beyond it.
+          </p>
+          <div class="callout">
+            For margin(x) = x on [-2, 2] at radius 1, robust class-0 references
+            are [-2, -1), while class-1 references are [1, 2]. The class-1 tie
+            at zero changes which shifted endpoint is included.
+          </div>
+          <p>
+            The selected request reference is shown below, but it does not
+            change this all-reference set. Radius zero preserves every point,
+            even an isolated class-1 tie.
+          </p>
+        </aside>
+      </section>
+      <section id="output" hidden>
+        <p class="eyebrow">All references in the declared domain</p>
+        <h2 id="verdict"></h2>
+        <p id="explanation"></p>
+        <div id="metrics" class="metrics"></div>
+        <h2>A map of the two classes</h2>
+        <p class="caption">
+          Thin upper rows are the original class sets. Thick lower rows are the
+          robust reference sets. Filled circles include endpoints; hollow
+          circles exclude them. A lone filled circle is a singleton. Coordinate
+          rounding is for display only.
+        </p>
+        <svg
+          id="plot"
+          viewBox="0 0 760 300"
+          role="img"
+          aria-label="Class sets and exact robust reference intervals"
+        ></svg>
+        <p id="plot-caption" class="caption"></p>
+        <div id="classes" class="reference-classes"></div>
+        <label for="region">Inspect a robust reference component</label
+        ><select id="region"></select>
+        <div id="region-detail" class="callout"></div>
+        <div id="components" class="reference-components"></div>
+      </section>
+      <section id="limits">
+        <h2>All references, not arbitrary networks.</h2>
+        <p>
+          The base contract is unchanged: one scalar input, one or two hidden
+          ReLU layers of width 1..3, one scalar margin. All input rational
+          values have absolute value at most 32 and reduced denominator at most
+          1,024. The domain is a nonempty closed interval. Class 1 owns every
+          zero-margin tie. Only the closed ball intersected with this domain is
+          checked.
+        </p>
+        <p>
+          Robust fraction is exact interval length divided by domain length. It
+          is not accuracy or probability under a data distribution. Singleton
+          sets have zero length but are retained as real references.
+        </p>
+        <p>
+          The forward generator erodes exact class components. A separate
+          checker enumerates activation masks, splits all boundary/root atoms
+          and their radius-shifted critical points, then checks opposite-class
+          intersection with the closed ball. It calls neither the reference
+          generator nor its erosion or union routines. A browser report becomes
+          independently checked only after Python accepts the downloaded JSON.
+        </p>
+        <p>
+          This uses established piecewise-affine analysis and set erosion, not a
+          new verification algorithm. Relative-domain clipping and endpoint
+          ownership are explicit. No model training/import, high-dimensional
+          certificate, sampled-grid proof or benchmark claim. See the source's
+          REFERENCE.md and SOURCES.md for the exact definition and attribution.
+        </p>
+      </section>
+    </main>
+    <script type="module" src="reference-app.js"></script>
+  </body>
+</html>
