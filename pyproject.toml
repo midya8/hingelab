@@ -3,7 +3,7 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 [project]
 name = "hingelab"
-version = "0.1.0"
+version = "0.2.0"
 description = "Exact bounded rational ReLU region and robustness inspector"
 requires-python = ">=3.10"
 license = {text = "MIT"}
