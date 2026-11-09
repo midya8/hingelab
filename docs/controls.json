@@ -1,0 +1,153 @@
+[
+  {
+    "label": "Open infimum, radius exactly one",
+    "input": {
+      "layers": [
+        {
+          "weights": [[1], [-1]],
+          "bias": [0, 0]
+        }
+      ],
+      "output": {
+        "weights": [1, -1],
+        "bias": 0
+      },
+      "domain": [-2, 2],
+      "reference": 1,
+      "radius": 1
+    }
+  },
+  {
+    "label": "Attained tie, radius exactly one",
+    "input": {
+      "layers": [
+        {
+          "weights": [[1], [-1]],
+          "bias": [0, 0]
+        }
+      ],
+      "output": {
+        "weights": [1, -1],
+        "bias": 0
+      },
+      "domain": [-2, 2],
+      "reference": -1,
+      "radius": 1
+    }
+  },
+  {
+    "label": "Isolated opposite-class tie",
+    "input": {
+      "layers": [
+        {
+          "weights": [[1], [-1]],
+          "bias": [0, 0]
+        }
+      ],
+      "output": {
+        "weights": [-1, -1],
+        "bias": 0
+      },
+      "domain": [-2, 2],
+      "reference": -1,
+      "radius": 1
+    }
+  },
+  {
+    "label": "Zero plateau, no adversary",
+    "input": {
+      "layers": [
+        {
+          "weights": [[1]],
+          "bias": [0]
+        }
+      ],
+      "output": {
+        "weights": [1],
+        "bias": 0
+      },
+      "domain": [-2, 2],
+      "reference": -1,
+      "radius": 1
+    }
+  },
+  {
+    "label": "Open set, larger radius",
+    "input": {
+      "layers": [
+        {
+          "weights": [[1], [-1]],
+          "bias": [0, 0]
+        }
+      ],
+      "output": {
+        "weights": [1, -1],
+        "bias": 0
+      },
+      "domain": [-2, 2],
+      "reference": 1,
+      "radius": "3/2"
+    }
+  },
+  {
+    "label": "Rational knots and decision root",
+    "input": {
+      "layers": [
+        {
+          "weights": [[3]],
+          "bias": [1]
+        }
+      ],
+      "output": {
+        "weights": [1],
+        "bias": -1
+      },
+      "domain": [-2, 2],
+      "reference": "-1/2",
+      "radius": 1
+    }
+  },
+  {
+    "label": "Hidden kink, constant output",
+    "input": {
+      "layers": [
+        {
+          "weights": [[1], [1]],
+          "bias": [0, 0]
+        }
+      ],
+      "output": {
+        "weights": [1, -1],
+        "bias": 0
+      },
+      "domain": [-2, 2],
+      "reference": -1,
+      "radius": 1
+    }
+  },
+  {
+    "label": "Nested tent with extra regions",
+    "input": {
+      "layers": [
+        {
+          "weights": [[1], [-1]],
+          "bias": [0, 0]
+        },
+        {
+          "weights": [
+            [-1, -1],
+            [1, 1]
+          ],
+          "bias": [1, -1]
+        }
+      ],
+      "output": {
+        "weights": [1, -1],
+        "bias": "-1/2"
+      },
+      "domain": [-2, 2],
+      "reference": 0,
+      "radius": "1/2"
+    }
+  }
+]
