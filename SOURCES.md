@@ -33,3 +33,8 @@ Reviewed November 9, 2026. This project is an original bounded educational imple
 ## Local claims, not borrowed results
 
 The classifier's class-1 tie convention, domain-restricted opposite-class sets, attained minimum versus open-set infimum, and closed-ball verdict are defined explicitly in CONTRACT.md and checked by exact rational interval topology. A paper's different tie convention is not silently imported. The maximum absolute output slope is the least Lipschitz constant of this continuous scalar piecewise-affine function on its declared interval. No learned-model accuracy, runtime benchmark, new-algorithm result or broader formal-verification guarantee is claimed.
+
+## Reference-atlas extension
+
+- H.J.A.M. Heijmans, *Mathematical Morphology: an Algebraic Approach*, CWI primary paper, §1.2. https://ir.cwi.nl/pub/2430/2430D.pdf . Erosion is containment of a translated structuring element. Used for established set-erosion attribution, not the paper's complete-lattice results.
+- Wesley Pegden, *Sets resilient to erosion*, primary manuscript. https://ar5iv.labs.arxiv.org/html/1101.4416 . Its definition uses open balls and distance ≥ r, unlike our closed perturbation balls and mixed endpoint class sets. Used to make convention differences explicit, not to claim its resilience theorems apply.
