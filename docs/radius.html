@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Exact all-radius robust-length profiles and independent mask-atom verification for bounded rational scalar ReLU networks."
+    />
+    <title>HingeLab - every radius, exact</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="reference.css" />
+    <link rel="stylesheet" href="radius.css" />
+  </head>
+  <body>
+    <main>
+      <nav>
+        <a href="index.html">Single reference</a
+        ><a href="reference.html">Every reference</a
+        ><a href="https://github.com/midya8/hingelab"
+          >Source &amp; reproduction</a
+        ><a href="#limits">Scope</a>
+      </nav>
+      <header>
+        <p class="eyebrow">HingeLab / the erosion profile</p>
+        <h1>Every radius.<br />Nothing rounded away.</h1>
+        <p class="lead">
+          Trace exactly how much of a scalar network's input domain stays robust
+          as the perturbation grows. Find a target-length threshold. Keep
+          existence separate.
+        </p>
+        <div class="tags">
+          <span>Piecewise-linear length</span
+          ><span>Strict extinction endpoints</span
+          ><span>Independent mask-atom checker</span>
+        </div>
+      </header>
+      <section class="workspace">
+        <div>
+          <label for="control">Choose an experiment</label
+          ><select id="control"></select
+          ><label for="target"
+            >Target robust fraction (integer or fraction, 0 to 1)</label
+          ><input id="target" value="1/2" spellcheck="false" /><label
+            for="input"
+            >Network request JSON</label
+          ><textarea id="input" rows="20" spellcheck="false"></textarea>
+          <div class="actions">
+            <button id="run">Build radius profile</button
+            ><button id="download" disabled>Download evidence</button>
+          </div>
+          <p id="error" role="alert"></p>
+        </div>
+        <aside>
+          <h2>Length can vanish before the last point.</h2>
+          <p>
+            Each class component loses length at speed zero, one or two as
+            radius grows. Exact breakpoints assemble a complete profile on [0,
+            32], rather than a sweep over a sampled grid.
+          </p>
+          <div class="callout">
+            For margin(x) = x on [-2, 2], the robust length reaches zero at
+            radius 2. Class 0 is already empty there, but the class-1 endpoint
+            {2} still exists. At every radius above 2 both sets are empty.
+          </div>
+          <p>
+            The inverse query finds the first radius whose total robust length
+            is at most the chosen fraction of domain length. A zero target is
+            about length, not absence of robust points. A constant class may
+            never reach your target.
+          </p>
+          <p>
+            The network's saved radius and reference remain required by the
+            shared schema, but neither changes this all-radius calculation.
+          </p>
+        </aside>
+      </section>
+      <section id="output" hidden>
+        <p class="eyebrow">Exact radius interval [0, 32]</p>
+        <h2 id="verdict"></h2>
+        <p id="explanation"></p>
+        <div id="metrics" class="metrics"></div>
+        <h2>How robust length changes</h2>
+        <p class="caption">
+          Total robust interval length, with a separate curve per class.
+          Horizontal axis: radius. Vertical axis: interval length. The
+          early-breakpoint inset preserves detail; the full-range plot keeps the
+          entire declared horizon visible. Coordinate rounding is display only.
+        </p>
+        <div class="plots">
+          <div>
+            <h3>Breakpoint detail</h3>
+            <svg
+              id="plot"
+              viewBox="0 0 760 320"
+              role="img"
+              aria-label="Exact robust length near all breakpoints"
+            ></svg>
+          </div>
+          <div>
+            <h3>Full radius horizon</h3>
+            <svg
+              id="full-plot"
+              viewBox="0 0 760 320"
+              role="img"
+              aria-label="Exact robust length over radius zero to thirty-two"
+            ></svg>
+          </div>
+        </div>
+        <p id="plot-caption" class="caption"></p>
+        <div id="classes" class="reference-classes"></div>
+        <h2>Every affine piece</h2>
+        <p class="caption">
+          L(r) = slope × r + intercept. Length is continuous, so neighboring
+          pieces agree at their shared endpoint. Existence intervals below keep
+          their own open or closed extinction endpoint.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Radius interval</th>
+                <th>Slope</th>
+                <th>Intercept</th>
+              </tr>
+            </thead>
+            <tbody id="pieces"></tbody>
+          </table>
+        </div>
+        <div id="existence" class="callout"></div>
+      </section>
+      <section id="limits">
+        <h2>Exact within a deliberately small contract.</h2>
+        <p>
+          One scalar input, one or two hidden ReLU layers of width 1..3 and a
+          scalar margin. Class 1 owns zero-margin ties. Input rationals have
+          absolute value at most 32 and reduced denominator at most 1,024. Every
+          closed perturbation ball is intersected with the declared nonempty
+          closed domain. Radius horizon is [0,32]; the target fraction is in
+          [0,1]. Computed rational breakpoints are not rounded to input limits.
+        </p>
+        <p>
+          Length fraction is not accuracy or probability under a data
+          distribution. A zero-length singleton still exists. An unattained
+          target means no radius in this horizon meets the length target, not
+          that the network is globally certified.
+        </p>
+        <p>
+          The generator sums each exact class component's clipped affine length.
+          A separate Python checker enumerates activation masks, class atoms and
+          all candidate collision radii from boundary differences and
+          half-differences. It reconstructs length at exact interior probes
+          through opposite-class closed-ball intersection, and checks boundary
+          values and existence separately. No forward profile, reference-atlas,
+          union or erosion generator is imported by that checker. It shares only
+          parsing, direct evaluation and the independent base mask enumerator.
+          Python must accept the downloaded evidence before it is independently
+          checked.
+        </p>
+        <p>
+          This uses established piecewise-affine analysis and morphological
+          erosion. No new algorithm, imported or trained model, high-dimensional
+          certificate, benchmark, grid proof or scaling claim. See RADIUS.md,
+          REFERENCE.md and SOURCES.md in the source repository for the
+          finite-partition argument, reproduction and attribution.
+        </p>
+      </section>
+    </main>
+    <script type="module" src="radius-app.js"></script>
+  </body>
+</html>
