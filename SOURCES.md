@@ -38,3 +38,11 @@ The classifier's class-1 tie convention, domain-restricted opposite-class sets, 
 
 - H.J.A.M. Heijmans, *Mathematical Morphology: an Algebraic Approach*, CWI primary paper, §1.2. https://ir.cwi.nl/pub/2430/2430D.pdf . Erosion is containment of a translated structuring element. Used for established set-erosion attribution, not the paper's complete-lattice results.
 - Wesley Pegden, *Sets resilient to erosion*, primary manuscript. https://ar5iv.labs.arxiv.org/html/1101.4416 . Its definition uses open balls and distance ≥ r, unlike our closed perturbation balls and mixed endpoint class sets. Used to make convention differences explicit, not to claim its resilience theorems apply.
+
+## All-radius profile extension
+
+The robust-length profile sums established interval erosions, with exact
+relative-domain clipping and endpoint ownership. The existing line-restriction
+and morphology sources apply unchanged. No cited paper is claimed to provide
+this code, its independent mask/critical-radius implementation, a new theorem
+or an empirical benchmark. RADIUS.md proves the finite partition used here.

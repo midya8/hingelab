@@ -61,3 +61,16 @@ calling the erosion generator. `python -m hingelab reference request.json` creat
 evidence; `python -m hingelab reference-verify report.json` checks it. See
 [REFERENCE.md](REFERENCE.md) for definitions, finite-exhaustion argument, limits
 and attribution. The exact robust length fraction is not accuracy or probability.
+
+## Every radius, exact
+
+[All-radius demo](https://midya8.github.io/hingelab/radius.html) · [Contract and finite-check argument](RADIUS.md)
+
+Exact piecewise-linear robust interval length for every radius in [0,32], plus
+strict/closed existence sets and the first radius at most a requested length
+fraction. Zero length is not emptiness: margin x retains a robust singleton at
+radius 2 even though total length is already zero. A separate mask/atom checker
+reconstructs the profile from critical-radius differences and half-differences
+and direct closed-ball intersection, without importing the generator or its
+reference/erosion routines. Browser evidence becomes independently checked only
+after Python accepts its JSON. No accuracy, data-probability or scaling claim.
