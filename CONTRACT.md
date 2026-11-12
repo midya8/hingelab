@@ -1,4 +1,4 @@
-# Exact bounded contract: hingelab-v1
+# HingeLab one-reference contract: hingelab-v1
 
 ## Inputs
 
