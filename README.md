@@ -1,16 +1,22 @@
 # HingeLab
 
-A decision boundary is not always an adversary. Inspect every affine region of a small rational ReLU network, then check whether the distance to a different class is attained, only approached, or absent in the domain.
+HingeLab computes every affine region of a supplied small rational ReLU network. For one scalar input and a fixed label convention, it checks whether the distance to another class is attained, only approached or absent in the domain.
+
+Three inspectors keep the questions separate:
+
+- [One reference and radius](CONTRACT.md): is the requested closed ball robust, and is there an actual opposite-class witness?
+- [Every reference at one radius](REFERENCE.md): which points belong to the complete robust-reference set?
+- [Every radius](RADIUS.md): how does robust interval length change, and can robust points remain when length is zero?
 
 [Live inspector](https://midya8.github.io/hingelab/) · [Exact contract](CONTRACT.md) · [Implementation](hingelab/atlas.py) · [Independent checker](hingelab/oracle.py)
 
-## What makes the example matter
+## A boundary need not attain the distance
 
 Fix class 1 at margin ≥ 0 and class 0 otherwise. For margin(x) = x at reference x = 1, the opposite-class set is [-2, 0). Its distance has infimum 1, but no opposite-class point attains it. A closed ball of radius exactly 1 is robust. At reference x = -1, the tie x = 0 is an actual class change, so the same radius is not robust. A boundary alone does not decide robustness without the label convention and endpoint topology.
 
 The controls include those two cases, an isolated opposite-class tie, a zero plateau, a larger-radius witness, rational activation knots, an output-cancelled hidden kink and a nested two-layer tent. Domain restriction is explicit.
 
-## Exact implementation, separate evidence
+## Implementation and independent checks
 
 - Forward interval splitting propagates affine forms with Python `Fraction`. The browser uses normalized `BigInt` fractions. No floating-point root search or sampled-grid certificate.
 - Every cell retains its exact interval, output slope/intercept and canonical hidden activation mask on the open interior. Hidden kinks remain visible even when the scalar output cancels.
